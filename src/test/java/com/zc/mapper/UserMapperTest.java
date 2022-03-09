@@ -22,7 +22,7 @@ public class UserMapperTest {
         User user = new User();
         user.setUsername("zc123");
         user.setPassword("123");
-        user.setRoleid(1);
+//        user.setRoleid(1);
         System.out.println(userMapper.insert(user));
     }
 }

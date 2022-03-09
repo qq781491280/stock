@@ -13,6 +13,10 @@ mybatis-plus:
       db-config:
         table-prefix: sys_
         id-type: auto
+#        table-underline: off
     configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      #关闭驼峰命名转换下划线
+#      map-underscore-to-camel-case: off
+    mapper-locations: com/zc/mapper/*.xml
 
