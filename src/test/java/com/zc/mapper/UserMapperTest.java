@@ -19,10 +19,10 @@ public class UserMapperTest {
     }
     @Test
     void setUser(){
-        User user = new User();
-        user.setUsername("zc123");
-        user.setPassword("123");
+//        User user = new User();
+//        user.getUsername("zc123");
+//        user.setPassword("123");
 //        user.setRoleid(1);
-        System.out.println(userMapper.insert(user));
+//        System.out.println(userMapper.insert(user));
     }
 }

@@ -20,4 +20,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<User> UserList() {
         return userMapper.selectUserList();
     }
+
+    @Override
+    public User getByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
+
+    @Override
+    public Boolean existsUsername(String username) {
+        if (userMapper.selectByUsername(username)==null){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean getByUsernameAndPassword(String username, String password) {
+        return userMapper.selectByUsernameAndPassword(username,password);
+    }
+
+    @Override
+    public Boolean modfiy(User user) {
+        return userMapper.updateByUsername(user);
+    }
 }

@@ -15,6 +15,6 @@ public class User {
     private String  email;
     private Date birthday;
     private String  address;
-//    private Integer roleid;
+    private Integer roleId;
     private Role role;
 }
