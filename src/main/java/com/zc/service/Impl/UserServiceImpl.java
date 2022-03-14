@@ -71,6 +71,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return i==1;
     }
 
+    /**
+     * 修改密码
+     * @param username
+     * @param newpassword
+     * @param oldpassword
+     */
     @Override
     public void modfiypassword(String username, String newpassword, String oldpassword) {
         User result = userMapper.selectByUsername(username);
@@ -82,8 +88,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             if (!judge.JudgePwd(newpassword)){
                 throw new VerifyPasswordException("新密码不规范");
             }else {
-                Integer i = userMapper.updatePasswordByUsername(username, newpassword,oldpassword);
-                if (i!=1) throw new InsertException("修改密码时发生了未知错误");
+                if (newpassword.equals(oldpassword)){
+                    throw new VerifyPasswordException("新旧密码不能相同");
+                }else {
+                    Integer i = userMapper.updatePasswordByUsername(username, newpassword,oldpassword);
+                    if (i!=1) throw new InsertException("修改密码时发生了未知错误");
+                }
+
             }
 
         }

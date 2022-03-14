@@ -54,12 +54,11 @@ public class UserController extends BaseController {
      * @return
      */
   @PostMapping
-  public JsonResult register(@RequestBody User user){
+  public JsonResult register(@RequestBody User user) {
       userService.register(user);
       return new JsonResult(OK);
 
   }
-
     /**
      * 更新用户信息
      * @param user
@@ -84,6 +83,4 @@ public class UserController extends BaseController {
         userService.modfiypassword(username,newpassword,oldpassword);
         return new JsonResult(OK);
     }
-
-
 }

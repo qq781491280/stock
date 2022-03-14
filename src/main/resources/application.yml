@@ -1,3 +1,4 @@
+
 server:
   port: 80
 
@@ -16,7 +17,10 @@ mybatis-plus:
 #        table-underline: off
     configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-      #¹Ø±ÕÍÕ·åÃüÃû×ª»»ÏÂ»®Ïß
+      #å…³é—­é©¼å³°å‘½å
 #      map-underscore-to-camel-case: off
     mapper-locations: com/zc/mapper/*.xml
+
+#æ–‡ä»¶ä¸Šä¼ è·¯å¾„
+#windowsç¯å¢ƒä¸‹ä¸Šä¼ æ–‡ä»¶ä¿å­˜ç›®å½•
 

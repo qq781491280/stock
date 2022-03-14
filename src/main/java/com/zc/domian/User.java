@@ -18,5 +18,6 @@ public class User {
     private Date birthday;
     private String  address;
     private Integer roleId;
+    private String  userimg;
     private Role role;
 }
