@@ -15,6 +15,7 @@ public class BaseController {
     else if (e instanceof PasswordNotMatchException) result.setState(402);
     else if (e instanceof VerifyUsernameException) result.setState(403);
     else if (e instanceof VerifyPasswordException) result.setState(403);
+    else if (e instanceof FileNotEmptyException) result.setState(501);
     return result;
 }
 }

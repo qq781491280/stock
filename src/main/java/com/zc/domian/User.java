@@ -3,7 +3,7 @@ package com.zc.domian;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class User {
@@ -14,7 +14,8 @@ public class User {
     private String  sex;
     private Long  phoneNumber;
     private String  email;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+@JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
     private String  address;
     private Integer roleId;
