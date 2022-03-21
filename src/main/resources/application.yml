@@ -14,8 +14,6 @@ spring:
       max-file-size: 10MB  #单次上传文件最大不超过10MB
       max-request-size: 100MB  #文件总上传大小不超过100MB
 
-
-
 mybatis-plus:
     global-config:
       db-config:

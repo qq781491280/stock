@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zc.mapper.GoodsMapper">
+
+    <resultMap type="com.zc.domian.Goods" id="goodsResultMap">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="cid" property="cid" jdbcType="INTEGER" />
+        <result column="bid" property="bid" jdbcType="INTEGER" />
+        <result column="mname" property="mname" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="BIGINT" />
+        <result column="wprice" property="wprice" jdbcType="DECIMAL" />
+        <result column="sprice" property="sprice" jdbcType="DECIMAL" />
+        <result column="etime" property="etime" jdbcType="DATE"/>
+        <result column="wtime" property="wtime" jdbcType="DATE"/>
+        <association property="sort" javaType="com.zc.domian.Sort">
+            <id column="c_id" property="id" jdbcType="INTEGER" />
+            <result column="c_name" property="cname" jdbcType="VARCHAR" />
+        </association>
+        <association property="brand" javaType="com.zc.domian.Brand">
+            <id column="b_id" property="id" jdbcType="INTEGER" />
+            <result column="b_name" property="pinpai" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <update id="updateBymname" parameterType="com.zc.domian.Goods">
+        UPDATE sys_goods
+        <set>
+            <if test="cid != null">cid=#{cid},</if>
+            <if test="bid != null">bid=#{bid},</if>
+            <if test="mname != null">mname=#{mname},</if>
+            <if test="wprice != null">wprice=#{wprice},</if>
+            <if test="sprice!= null">sprice=#{sprice}</if>
+        </set>
+        WHERE mname=#{mname}
+    </update>
+    <update id="updateNumberByName">
+        UPDATE sys_goods
+         <set>
+             <if test="number != null">number =#{number},</if>
+             <if test="etime != null" > etime=#{etime}</if>
+         </set>
+         WHERE mname=#{mname}
+    </update>
+
+    <update id="updateWtimeNumberByName">
+        UPDATE sys_goods
+        <set>
+            <if test="number != null">number =#{number},</if>
+            <if test="wtime != null" > wtime=#{wtime}</if>
+        </set>
+        WHERE mname=#{mname}
+    </update>
+
+    <delete id="deleteByMname" parameterType="string">
+        delete from sys_goods where mname=#{mname}
+    </delete>
+
+    <select id="selectByMname" resultMap="goodsResultMap">
+      select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.mname=#{mname}
+    </select>
+    <select id="selectList" resultMap="goodsResultMap">
+        select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id
+    </select>
+</mapper>

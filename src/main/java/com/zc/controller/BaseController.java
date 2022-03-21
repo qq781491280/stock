@@ -16,6 +16,8 @@ public class BaseController {
     else if (e instanceof VerifyUsernameException) result.setState(403);
     else if (e instanceof VerifyPasswordException) result.setState(403);
     else if (e instanceof FileNotEmptyException) result.setState(501);
+    else if (e instanceof GoodsNotEmptyException) result.setState(601);
+    else if (e instanceof GoodsException) result.setState(602);
     return result;
 }
 }
