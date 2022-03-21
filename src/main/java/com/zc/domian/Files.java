@@ -1,12 +1,14 @@
 package com.zc.domian;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
 
-
 @Data
-public class Upload {
+public class Files {
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     //存在本地的地址
@@ -27,5 +29,5 @@ public class Upload {
 
     private String uid;
 
-    private User user;
+//    private String user;
 }

@@ -8,12 +8,13 @@ spring:
     url: jdbc:mysql://localhost:3306/inventory?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
-
-#文件上传
-servlet:
+  #文件上传
+  servlet:
     multipart:
       max-file-size: 10MB  #单次上传文件最大不超过10MB
       max-request-size: 100MB  #文件总上传大小不超过100MB
+
+
 
 mybatis-plus:
     global-config:
@@ -26,3 +27,10 @@ mybatis-plus:
       #关闭驼峰命名
 #      map-underscore-to-camel-case: off
     mapper-locations: com/zc/mapper/*.xml
+
+###文件上传
+file:
+  ###静态资源对外暴露的访问路径
+  staticAccessPath: /api/file/**
+  ###静态资源实际存储路径   D:/static/teamImages/
+  uploadFolder: D:/study/Test/inventory/file/img/

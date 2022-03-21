@@ -49,6 +49,7 @@ public class FileUtils {
     public static boolean deleteFile(String filePath) {
         boolean flag = false;
         File file = new File(filePath);
+        System.out.println(file.getPath());
         if (file.isFile() && file.exists()) {
             file.delete();
             flag = true;
