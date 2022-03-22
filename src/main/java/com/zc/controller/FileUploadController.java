@@ -1,6 +1,7 @@
 package com.zc.controller;
 
 import com.zc.service.FileService;
+import com.zc.service.UserService;
 import com.zc.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,21 @@ public class FileUploadController extends BaseController {
     @Autowired
     FileService fileService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/upload")
     @ResponseBody
     public JsonResult upload(@RequestParam("file") MultipartFile file){
         fileService.upload(file);
         return new JsonResult(OK);
     }
+
+    @RequestMapping("/uploadavatar")
+    @ResponseBody
+    public JsonResult uploadavatar(@RequestParam("file") MultipartFile file,@RequestParam("username") String username){
+        fileService.uploadAvatar(file,username);
+        return new JsonResult(OK);
+    }
+
 }

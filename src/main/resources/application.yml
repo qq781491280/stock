@@ -32,3 +32,4 @@ file:
   staticAccessPath: /api/file/**
   ###静态资源实际存储路径   D:/static/teamImages/
   uploadFolder: D:/study/Test/inventory/file/img/
+  avatarFolder: D:/study/Test/inventory/file/img/avatar/

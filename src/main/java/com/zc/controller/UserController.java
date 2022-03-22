@@ -1,10 +1,7 @@
 package com.zc.controller;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.zc.domian.User;
 import com.zc.service.UserService;
 import com.zc.utils.JsonResult;
-import com.zc.utils.judge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
