@@ -20,6 +20,8 @@
             <id column="b_id" property="id" jdbcType="INTEGER" />
             <result column="b_name" property="pinpai" jdbcType="VARCHAR" />
         </association>
+        <association property="goodsimg" javaType="com.zc.domian.Files">
+        </association>
     </resultMap>
     <update id="updateBymname" parameterType="com.zc.domian.Goods">
         UPDATE sys_goods

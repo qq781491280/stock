@@ -6,6 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Goods {
@@ -42,5 +43,9 @@ public class Goods {
     //出库时间
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd", timezone = "GMT+8")
     private Date wtime;
+
+    //图片
+    private List<Files> goodsimg;
+
 }
 

@@ -1,7 +1,9 @@
 package com.zc.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zc.domian.Files;
 import com.zc.domian.Goods;
+import com.zc.mapper.FileMapper;
 import com.zc.mapper.GoodsMapper;
 import com.zc.service.GoodsService;
 import com.zc.service.ex.GoodsException;
@@ -17,16 +19,26 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Autowired
     GoodsMapper goodsMapper;
 
+    @Autowired
+    FileMapper fileMapper;
+
     @Override
     public Goods getBymname(String mname) {
       Goods result =  goodsMapper.selectByMname(mname);
-      if (result == null) throw new GoodsNotEmptyException("找不到此商品");
+        if (result == null) throw new GoodsNotEmptyException("找不到此商品");
+        List<Files> goodsImgByGid = fileMapper.findGoodsImgByGid(result.getId());
+            result.setGoodsimg(goodsImgByGid);
         return result;
     }
 
     @Override
     public List<Goods> getList() {
     List<Goods> result = goodsMapper.selectList();
+        for (Goods f: result) {
+            Integer id = f.getId();
+            List<Files> goodsImgByGid = fileMapper.findGoodsImgByGid(id);
+            f.setGoodsimg(goodsImgByGid);
+        }
         return result;
     }
 

@@ -3,6 +3,7 @@ package com.zc.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zc.domian.Goods;
+import com.zc.domian.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.omg.PortableInterceptor.INACTIVE;
