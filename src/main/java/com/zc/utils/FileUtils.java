@@ -1,4 +1,4 @@
-package com.zc.utils.File;
+package com.zc.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;

@@ -7,7 +7,7 @@ import com.zc.domian.User;
 import com.zc.mapper.FileMapper;
 import com.zc.mapper.UserMapper;
 import com.zc.service.FileService;
-import com.zc.utils.File.FileUtils;
+import com.zc.utils.FileUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;

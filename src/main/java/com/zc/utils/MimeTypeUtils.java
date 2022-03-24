@@ -1,4 +1,4 @@
-package com.zc.utils.File;
+package com.zc.utils;
 
 public class MimeTypeUtils {
     public static final String IMAGE_PNG = "image/png";
