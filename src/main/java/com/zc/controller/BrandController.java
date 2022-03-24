@@ -25,6 +25,7 @@ public class BrandController extends BaseController {
     public JsonResult addone(@RequestBody Brand brand){
         brandService.save(brand);
         return new JsonResult(OK);
+
     }
 
 }
