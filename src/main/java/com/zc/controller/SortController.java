@@ -27,4 +27,10 @@ public class SortController extends BaseController {
         return new JsonResult(OK);
     }
 
+    @DeleteMapping("{id}")
+    public JsonResult delById(@PathVariable Integer id){
+        sortService.removeById(id);
+        return new JsonResult(OK);
+    }
+
 }

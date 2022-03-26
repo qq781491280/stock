@@ -25,7 +25,12 @@ public class BrandController extends BaseController {
     public JsonResult addone(@RequestBody Brand brand){
         brandService.save(brand);
         return new JsonResult(OK);
+    }
 
+    @DeleteMapping("{id}")
+    public JsonResult delById(@PathVariable Integer id){
+        brandService.removeById(id);
+        return new JsonResult(OK);
     }
 
 }
