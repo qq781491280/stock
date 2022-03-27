@@ -2,7 +2,9 @@ package com.zc.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zc.domian.Files;
 import com.zc.domian.Goods;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,4 +21,6 @@ public interface GoodsService extends IService<Goods> {
     void modfiyNumberByName(String mname,String etime, String number);
 
     void modfiyWtimeNumberByName(String mname,String wtime,String number);
+
+
 }

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zc.mapper.FileMapper">
+    <insert id="addGoodsImg" parameterType="long">
+        INSERT INTO sys_goodsimg(goodsid,filesid) VALUES (#{goodsid},#{filesid})
+    </insert>
+    <insert id="insertImg" parameterType="com.zc.domian.Files" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_files(location,name,old_name,description,create_time,update_time,uid)VALUES(#{location},#{name},#{oldName},#{description},#{createTime},#{updateTime},#{uid})
+    </insert>
+    <delete id="deleteByurl" parameterType="string">
+        delete from sys_files where description=#{url}
+    </delete>
+    <delete id="deleteByimgid" parameterType="long">
+        delete from sys_goodsimg where filesid=#{filesid}
+    </delete>
+    <delete id="deleteByGid" parameterType="long">
+        delete from sys_goodsimg where goodsid=#{goodsid}
+    </delete>
 
-        <select id="findGoodsImgByGid" resultType="com.zc.domian.Files">
+    <select id="findGoodsImgByGid" resultType="com.zc.domian.Files">
             select * from sys_goodsimg ur,sys_files r where ur.filesid=r.id and ur.goodsid=#{id}
         </select>
 </mapper>

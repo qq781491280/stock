@@ -11,5 +11,15 @@ import java.util.List;
 @Repository
 @Mapper
 public interface FileMapper extends BaseMapper<Files> {
-    List<Files> findGoodsImgByGid(@Param("id") Integer id);
+    List<Files> findGoodsImgByGid(@Param("id") Long id);
+
+    void insertImg(Files files);
+    Integer addGoodsImg(@Param("goodsid")Long goodsid,@Param("filesid") Long filesid);
+
+    Integer deleteByurl(String url);
+
+    Integer deleteByimgid(Long filesid);
+
+    Integer deleteByGid(Long goodsid);
+
 }

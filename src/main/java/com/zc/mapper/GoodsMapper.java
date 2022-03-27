@@ -24,4 +24,10 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     Integer updateNumberByName(String mname,String etime, String number);
 
     Integer updateWtimeNumberByName(String mname,String wtime,String number);
+
+    Integer addone(Goods goods);
+
+    Goods findOneById(@Param("id") Long id);
+
+    List<Goods> selectimgByid(@Param("id") Long id);
 }

@@ -1,16 +1,18 @@
 package com.zc.controller;
 
+import com.zc.domian.Files;
+import com.zc.domian.Goods;
 import com.zc.service.FileService;
 import com.zc.service.UserService;
 import com.zc.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/file")
 public class FileUploadController extends BaseController {
 
     @Autowired
@@ -33,4 +35,18 @@ public class FileUploadController extends BaseController {
         return new JsonResult(OK);
     }
 
+    @RequestMapping("/uploadlist")
+    @ResponseBody
+    public  JsonResult uploadlist(@RequestParam("file") MultipartFile[] file,String mname){
+
+        List<Files> uploadlist = fileService.uploadlist(file,mname);
+
+        return new JsonResult(OK,uploadlist);
+    }
+
+    @PostMapping
+    public  JsonResult delimg(@RequestBody Files files){
+        fileService.delimg(files);
+        return new JsonResult(OK);
+    }
 }

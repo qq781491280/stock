@@ -23,6 +23,9 @@
         <association property="goodsimg" javaType="com.zc.domian.Files">
         </association>
     </resultMap>
+    <insert id="addone" parameterType="com.zc.domian.Goods" useGeneratedKeys="true" keyProperty="id">
+        INSERT  INTO sys_goods(cid,bid,mname,number)VALUES (#{cid},#{bid},#{mname},#{number})
+    </insert>
     <update id="updateBymname" parameterType="com.zc.domian.Goods">
         UPDATE sys_goods
         <set>
@@ -61,5 +64,11 @@
     </select>
     <select id="selectList" resultMap="goodsResultMap">
         select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id
+    </select>
+    <select id="selectimgByid" resultMap="goodsResultMap">
+     select * from sys_goodsimg ur,sys_goods r where ur.goodsid=r.id and ur.goodsid=#{id}
+    </select>
+    <select id="findOneById" resultType="com.zc.domian.Goods">
+          select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.id=#{id}
     </select>
 </mapper>

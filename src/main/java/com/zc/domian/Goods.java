@@ -1,17 +1,19 @@
 package com.zc.domian;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
 @Data
 public class Goods {
 
-    private Integer id;
+    @TableId(type = IdType.AUTO)
+    private Long id;
     //分类id
     private Integer cid;
 
@@ -28,7 +30,7 @@ public class Goods {
     private String  mname;
 
     //存库量
-    private BigInteger number;
+    private Long number;
 
     //进货价格
     private BigDecimal wprice;
@@ -46,6 +48,9 @@ public class Goods {
 
     //图片
     private List<Files> goodsimg;
+
+    //
+    private Long[] imgidlsit;
 
 }
 
