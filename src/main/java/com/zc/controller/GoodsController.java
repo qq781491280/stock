@@ -66,21 +66,29 @@ public class GoodsController extends BaseController {
      */
     @PutMapping
     public JsonResult updateGoodsInfo(@RequestBody Goods goods){
-        goodsService.modfiyGoodsInfo(goods);
+        goodsService.modfiyByGidGoodsInfo(goods);
         return new JsonResult(OK);
     }
 
     @RequestMapping("/updateNumber")
     @ResponseBody
-    public JsonResult updateNumber(@RequestParam("mname") String  mname,@RequestParam("etime") String  etime, @RequestParam("number") String number){
-        goodsService.modfiyNumberByName(mname,etime,number);
+    public JsonResult updateNumber(@RequestBody Goods goods){
+        goodsService.modfiyNumberByName(goods);
         return new JsonResult(OK);
     }
 
     @RequestMapping("/updatewtime")
     @ResponseBody
-    public JsonResult updatewtime(@RequestParam("mname") String  mname,@RequestParam("wtime") String  wtime, @RequestParam("number") String number){
-        goodsService.modfiyWtimeNumberByName(mname,wtime,number);
+    public JsonResult updatewtime(@RequestBody Goods goods){
+        goodsService.modfiyWtimeNumberByName(goods);
         return new JsonResult(OK);
     }
+
+    @RequestMapping("/findById")
+    @ResponseBody
+    public JsonResult findById (@RequestParam("id") Long id){
+        Goods goods = goodsService.findoneByid(id);
+        return new JsonResult(OK,goods);
+    }
+
 }

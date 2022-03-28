@@ -9,10 +9,12 @@ import com.zc.service.GoodsService;
 import com.zc.service.ex.GoodsException;
 import com.zc.service.ex.GoodsNotEmptyException;
 import com.zc.utils.FileUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -87,16 +89,51 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     }
 
     @Override
-    public void modfiyNumberByName(String mname,String etime, String number) {
-        Goods result = goodsMapper.selectByMname(mname);
+    public void modfiyByGidGoodsInfo(Goods goods) {
+        Goods result = goodsMapper.findOneById(goods.getId());
+        if (result==null) throw  new GoodsException("商品不存在");
+        goodsMapper.updateByGid(goods);
+    }
+
+    @SneakyThrows
+    @Override
+    public void modfiyNumberByName(Goods goods) {
+        Goods result = goodsMapper.findOneById(goods.getId());
         if (result==null) throw new GoodsException("商品不存在");
-        goodsMapper.updateNumberByName(mname,etime,number);
+        result.setNumber(result.getNumber()+goods.getNumber());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String etime = format.format(goods.getEtime());
+        Date date = format.parse(etime);
+        result.setEtime(date);
+        result.setWprice(goods.getWprice());
+        goodsMapper.updateNumberByName(result);
+    }
+
+    @SneakyThrows
+    @Override
+    public void modfiyWtimeNumberByName(Goods goods) {
+        Goods result = goodsMapper.findOneById(goods.getId());
+        if (result==null) throw new GoodsException("商品不存在");
+        if (result.getNumber()>goods.getNumber()){
+          result.setNumber(result.getNumber()-goods.getNumber());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String wtime = format.format(goods.getWtime());
+            Date date = format.parse(wtime);
+            result.setWtime(date);
+            result.setSprice(goods.getSprice());
+            goodsMapper.updateWtimeNumberByName(result);
+        }else {
+            throw  new GoodsException("库存不足");
+        }
+
     }
 
     @Override
-    public void modfiyWtimeNumberByName(String mname, String wtime, String number) {
-        Goods result = goodsMapper.selectByMname(mname);
-        if (result==null) throw new GoodsException("商品不存在");
-        goodsMapper.updateWtimeNumberByName(mname,wtime,number);
+    public Goods findoneByid(Long id) {
+        Goods oneById = goodsMapper.findOneById(id);
+        if (oneById==null) throw new GoodsException("商品不存在");
+        List<Files> goodsImgByGid = fileMapper.findGoodsImgByGid(oneById.getId());
+        oneById.setGoodsimg(goodsImgByGid);
+        return oneById;
     }
 }

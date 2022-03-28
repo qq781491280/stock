@@ -18,9 +18,12 @@ public interface GoodsService extends IService<Goods> {
 
     void modfiyGoodsInfo(Goods goods);
 
-    void modfiyNumberByName(String mname,String etime, String number);
+    void modfiyByGidGoodsInfo(Goods goods);
 
-    void modfiyWtimeNumberByName(String mname,String wtime,String number);
+    void modfiyNumberByName(Goods goods);
 
+    void modfiyWtimeNumberByName(Goods goods);
+
+    Goods  findoneByid(Long id);
 
 }

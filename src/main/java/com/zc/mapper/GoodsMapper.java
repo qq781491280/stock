@@ -21,9 +21,11 @@ public interface GoodsMapper extends BaseMapper<Goods> {
 
     Integer updateBymname(Goods goods);
 
-    Integer updateNumberByName(String mname,String etime, String number);
+    Integer updateNumberByName(Goods goods);
 
-    Integer updateWtimeNumberByName(String mname,String wtime,String number);
+    Integer updateWtimeNumberByName(Goods goods);
+
+    Integer updateByGid(Goods goods);
 
     Integer addone(Goods goods);
 

@@ -10,8 +10,8 @@
         <result column="number" property="number" jdbcType="BIGINT" />
         <result column="wprice" property="wprice" jdbcType="DECIMAL" />
         <result column="sprice" property="sprice" jdbcType="DECIMAL" />
-        <result column="etime" property="etime" jdbcType="DATE"/>
-        <result column="wtime" property="wtime" jdbcType="DATE"/>
+        <result column="etime" property="etime" jdbcType="TIMESTAMP"/>
+        <result column="wtime" property="wtime" jdbcType="TIMESTAMP"/>
         <association property="sort" javaType="com.zc.domian.Sort">
             <id column="c_id" property="id" jdbcType="INTEGER" />
             <result column="c_name" property="cname" jdbcType="VARCHAR" />
@@ -32,27 +32,41 @@
             <if test="cid != null">cid=#{cid},</if>
             <if test="bid != null">bid=#{bid},</if>
             <if test="mname != null">mname=#{mname},</if>
-            <if test="wprice != null">wprice=#{wprice},</if>
-            <if test="sprice!= null">sprice=#{sprice}</if>
+<!--            <if test="wprice != null">wprice=#{wprice},</if>-->
+<!--            <if test="sprice!= null">sprice=#{sprice}</if>-->
         </set>
         WHERE mname=#{mname}
     </update>
-    <update id="updateNumberByName">
+    <update id="updateByGid" parameterType="com.zc.domian.Goods">
+        UPDATE sys_goods
+        <set>
+            <if test="cid != null">cid=#{cid},</if>
+            <if test="bid != null">bid=#{bid},</if>
+            <if test="mname != null">mname=#{mname},</if>
+            <!--            <if test="wprice != null">wprice=#{wprice},</if>-->
+            <!--            <if test="sprice!= null">sprice=#{sprice}</if>-->
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateNumberByName" parameterType="com.zc.domian.Goods">
         UPDATE sys_goods
          <set>
              <if test="number != null">number =#{number},</if>
-             <if test="etime != null" > etime=#{etime}</if>
+             <if test="wprice != null "> wprice=#{wprice},</if>
+             <if test="etime != null" > etime=#{etime},</if>
          </set>
-         WHERE mname=#{mname}
+         WHERE id=#{id}
     </update>
 
-    <update id="updateWtimeNumberByName">
+    <update id="updateWtimeNumberByName" parameterType="com.zc.domian.Goods">
         UPDATE sys_goods
         <set>
             <if test="number != null">number =#{number},</if>
+            <if test="sprice != null "> sprice=#{sprice},</if>
             <if test="wtime != null" > wtime=#{wtime}</if>
         </set>
-        WHERE mname=#{mname}
+        WHERE id=#{id}
     </update>
 
     <delete id="deleteByMname" parameterType="string">
@@ -68,7 +82,7 @@
     <select id="selectimgByid" resultMap="goodsResultMap">
      select * from sys_goodsimg ur,sys_goods r where ur.goodsid=r.id and ur.goodsid=#{id}
     </select>
-    <select id="findOneById" resultType="com.zc.domian.Goods">
+    <select id="findOneById" resultMap="goodsResultMap">
           select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.id=#{id}
     </select>
 </mapper>
