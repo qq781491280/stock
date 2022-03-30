@@ -32,8 +32,6 @@
             <if test="cid != null">cid=#{cid},</if>
             <if test="bid != null">bid=#{bid},</if>
             <if test="mname != null">mname=#{mname},</if>
-<!--            <if test="wprice != null">wprice=#{wprice},</if>-->
-<!--            <if test="sprice!= null">sprice=#{sprice}</if>-->
         </set>
         WHERE mname=#{mname}
     </update>
@@ -43,8 +41,6 @@
             <if test="cid != null">cid=#{cid},</if>
             <if test="bid != null">bid=#{bid},</if>
             <if test="mname != null">mname=#{mname},</if>
-            <!--            <if test="wprice != null">wprice=#{wprice},</if>-->
-            <!--            <if test="sprice!= null">sprice=#{sprice}</if>-->
         </set>
         WHERE id=#{id}
     </update>

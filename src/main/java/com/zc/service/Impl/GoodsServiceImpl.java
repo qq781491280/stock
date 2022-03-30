@@ -3,9 +3,12 @@ package com.zc.service.Impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zc.domian.Files;
 import com.zc.domian.Goods;
+import com.zc.domian.Order;
 import com.zc.mapper.FileMapper;
 import com.zc.mapper.GoodsMapper;
+import com.zc.mapper.OrderMapper;
 import com.zc.service.GoodsService;
+import com.zc.service.OrderService;
 import com.zc.service.ex.GoodsException;
 import com.zc.service.ex.GoodsNotEmptyException;
 import com.zc.utils.FileUtils;
@@ -25,6 +28,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
     @Autowired
     FileMapper fileMapper;
+
+    @Autowired
+    OrderService orderService;
 
     @Override
     public Goods getBymname(String mname) {
@@ -121,6 +127,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             Date date = format.parse(wtime);
             result.setWtime(date);
             result.setSprice(goods.getSprice());
+            orderService.createOrder(goods,1);
             goodsMapper.updateWtimeNumberByName(result);
         }else {
             throw  new GoodsException("库存不足");

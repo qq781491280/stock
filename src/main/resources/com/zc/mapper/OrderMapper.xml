@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zc.mapper.OrderMapper">
+
+    <resultMap type="com.zc.domian.Order" id="OrderResultMap">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="userid" property="userid" jdbcType="VARCHAR"/>
+        <association property="orderItems" javaType="com.zc.domian.OrderItem">
+        </association>
+    </resultMap>
+    <select id="selectAll" resultMap="OrderResultMap">
+      select * from sys_order
+    </select>
+    <select id="selectByOrderId" resultMap="OrderResultMap">
+        select * from  sys_order where order_id=#{orderid}
+    </select>
+    <select id="selectBystr" resultMap="OrderResultMap">
+        select * from sys_order,sys_order_item
+        <where>
+            <if test="str!=null">
+             sys_order_item.name like "%"#{str}"%"
+            </if>
+        </where>
+    and sys_order.order_id=sys_order_item.order_id
+    </select>
+
+</mapper>

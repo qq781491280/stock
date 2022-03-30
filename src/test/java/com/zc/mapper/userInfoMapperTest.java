@@ -2,9 +2,13 @@ package com.zc.mapper;
 
 import com.zc.domian.Files;
 import com.zc.domian.Goods;
+import com.zc.domian.Order;
+import com.zc.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class userInfoMapperTest {
@@ -17,6 +21,15 @@ public class userInfoMapperTest {
 
     @Autowired
     FileMapper fileMapper;
+
+    @Autowired
+    OrderMapper orderMapper;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    OrderItemMapper orderItemMapper;
 
     @Test
     void getAll(){
@@ -35,8 +48,10 @@ public class userInfoMapperTest {
 //        fileMapper.insertImg(files);
 //        System.out.println(files.getId());
 
-      goodsMapper.selectimgByid(Long.valueOf(1));
-
+//        List<Order> order = orderService.getOrder();
+//        System.out.println(order);
+        List<Order> bystr = orderMapper.selectBystr("创维");
+        System.out.println(bystr);
     }
 
 }

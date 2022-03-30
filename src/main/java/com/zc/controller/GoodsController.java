@@ -1,7 +1,6 @@
 package com.zc.controller;
 
 import com.zc.domian.Goods;
-import com.zc.domian.User;
 import com.zc.service.GoodsService;
 import com.zc.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
