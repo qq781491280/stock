@@ -30,7 +30,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         } catch (TokenExpiredException e){
             jsonResult.setMessage("token过期");
         } catch (Exception e){
-            jsonResult.setMessage("token无效");
+            jsonResult.setMessage("您还未登录");
         }
         String json = new ObjectMapper().writeValueAsString(jsonResult);
         response.setContentType("application/json;charset=UTF-8");

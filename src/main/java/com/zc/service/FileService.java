@@ -7,11 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface FileService extends IService<Files> {
     void upload(MultipartFile file);
 
-    void uploadAvatar(MultipartFile file,String username);
+    Map<String, String> uploadAvatar(MultipartFile file,String username);
 
     List<Files> uploadlist(MultipartFile[] files,String mname);
 

@@ -2,9 +2,11 @@ package com.zc.controller;
 import com.zc.domian.User;
 import com.zc.service.UserService;
 import com.zc.utils.JsonResult;
+import com.zc.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +47,8 @@ public class UserController extends BaseController {
    */
     @GetMapping("{username}/{password}")
   public JsonResult login(@PathVariable String username, @PathVariable String password){
-        User data = userService.login(username, password);
-        return new JsonResult(OK,data);
+        userService.login(username, password);
+        return new JsonResult(OK);
     }
 
     /**
@@ -82,9 +84,16 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/modfiypassword")
     @ResponseBody
-    public JsonResult updatePasswordAndUsername(@RequestParam("username") String username,@RequestParam("newpassword") String newpassword,@RequestParam("oldpassword") String oldpassword){
-        userService.modfiypassword(username,newpassword,oldpassword);
+    public JsonResult updatePasswordAndUsername(@RequestParam("username") String username,@RequestParam("newpassword") String newpassword,@RequestParam("oldpassword") String oldpassword) {
+        userService.modfiypassword(username, newpassword, oldpassword);
 
         return new JsonResult(OK);
+    }
+        @RequestMapping("/tokenInfo")
+        @ResponseBody
+        public JsonResult getTokenInfo(HttpServletRequest request){
+            String token = request.getHeader("token");
+            Map<String, String> tokenInfo = JwtUtil.getTokenInfo(token);
+            return new JsonResult(OK,tokenInfo);
     }
 }

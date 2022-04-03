@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       // 判断查询结果中的密码，与以上加密得到的密码是否不一致
       // 是：抛出PasswordNotMatchException异常
      if (!userPassword.equals(md5Password))  throw new PasswordNotMatchException("密码验证失败的错误");
-        String token = JwtUtil.getToken(result.getId(),result.getUsername());
+        String token = JwtUtil.getToken(result.getId(),result.getUsername(),result.getUserInfoName());
         result.setToken(token);
         userMapper.updatetoken(username,token);
         return result;
@@ -87,7 +87,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setRoleId(2);
         user.setUserimg("http://127.0.0.1:80/api/file/toux.png");
         userMapper.register(user);
-        String token = JwtUtil.getToken(user.getId(),user.getUsername());
+        String token = JwtUtil.getToken(user.getId(),user.getUsername(),user.getUserInfoName());
         user.setToken(token);
         Integer i = userMapper.updatetoken(user.getUsername(), token);
         return i==1;
@@ -142,7 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     // 补全数据：加密后的密码
                     String newsalt = UUID.randomUUID().toString().toUpperCase();
                     String newmd5Password = getMd5Password(newpassword, newsalt);
-                    String token = JwtUtil.getToken(result.getId(),username);
+                    String token = JwtUtil.getToken(result.getId(),username,result.getUserInfoName());
                     userMapper.updatetoken(username,token);
                     Integer i = userMapper.updatePasswordByUsername(username, newmd5Password,oldmd5Password);
                     if (i!=1) throw new InsertException("修改密码时发生了未知错误");
