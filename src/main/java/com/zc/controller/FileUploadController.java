@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/file")
@@ -31,8 +32,8 @@ public class FileUploadController extends BaseController {
     @RequestMapping("/uploadavatar")
     @ResponseBody
     public JsonResult uploadavatar(@RequestParam("file") MultipartFile file,@RequestParam("username") String username){
-        fileService.uploadAvatar(file,username);
-        return new JsonResult(OK);
+        Map<String, String> map = fileService.uploadAvatar(file, username);
+        return new JsonResult(OK,map);
     }
 
     @RequestMapping("/uploadlist")

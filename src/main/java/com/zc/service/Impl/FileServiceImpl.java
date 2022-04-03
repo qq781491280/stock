@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements FileService {
@@ -94,7 +91,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
 
     @SneakyThrows
     @Override
-    public void uploadAvatar(MultipartFile file, String username) {
+    public Map<String, String> uploadAvatar(MultipartFile file, String username) {
         User user = userMapper.selectByUsername(username);
         String originalFilename =  file.getOriginalFilename();
         if(originalFilename == null || "".equals(originalFilename)) {
@@ -130,6 +127,11 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         }
 
         userMapper.updateAvatarByUsername(username,userimg);
+        Map<String, String> m =new HashMap<>();
+        m.put("userimg",userimg);
+
+
+        return m;
     }
 
     @SneakyThrows
