@@ -116,6 +116,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         try {
             file.transferTo(new java.io.File(avatarFolder, newFileName));
         } catch (IOException e) {
+
             e.printStackTrace();
         }
         String userimg="http://127.0.0.1:" + POST + "/api/file/" + newFileName;

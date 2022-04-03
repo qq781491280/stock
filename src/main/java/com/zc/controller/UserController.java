@@ -84,6 +84,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public JsonResult updatePasswordAndUsername(@RequestParam("username") String username,@RequestParam("newpassword") String newpassword,@RequestParam("oldpassword") String oldpassword){
         userService.modfiypassword(username,newpassword,oldpassword);
+
         return new JsonResult(OK);
     }
 }
