@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zc.mapper.UserMapper">
+    <resultMap type="com.zc.domian.User" id="UserResultMap">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="user_info_name" property="userInfoName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="token" property="token" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="phone_number" property="phoneNumber" jdbcType="BIGINT" />
+        <result  column="email" property="email" jdbcType="VARCHAR"/>
+        <result  column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result  column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="userimg" property="userimg" jdbcType="VARCHAR"/>
+        <association property="role" javaType="com.zc.domian.Role">
+            <id column="ru_id" property="id" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+            <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <update id="updateByUsername" parameterType="com.zc.domian.User">
+        UPDATE sys_user
+        <set>
+            <if test="userInfoName != null">user_info_name=#{userInfoName},</if>
+            <if test="sex != null">sex=#{sex},</if>
+            <if test="phoneNumber != null">phone_number=#{phoneNumber},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="birthday!= null">birthday=#{birthday}</if>
+            <if test="address != null">address=#{address}</if>
+            <if test="roleId != null">role_id=#{roleId}</if>
+            <if test="userimg != null">userimg=#{userimg}</if>
+        </set>
+         WHERE username=#{username}
+    </update>
+    <insert id="register" parameterType="com.zc.domian.User" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user(username,user_info_name,password,salt,token,sex,phone_number,email,birthday,address,role_id)
+        VALUES (#{username},#{userInfoName},#{password},#{salt},#{token},#{sex},#{phoneNumber},#{email},#{birthday},#{address},#{roleId})
+    </insert>
+    <update id="updatePasswordByUsername">
+		update sys_user set password=#{newpassword} where username=#{username}
+    </update>
+    <update id="updateAvatarByUsername">
+        update sys_user set userimg=#{userimg} where username = #{username}
+    </update>
+    <update id="updatetoken">
+        update sys_user set token=#{token} where username=#{username}
+    </update>
+    <select id="selectUserList" resultMap="UserResultMap">
+      select u.id,u.username,u.user_info_name,u.password,u.salt,u.token,u.sex,u.phone_number,u.email,u.birthday,u.address,u.userimg,ru.id ru_id,ru.role_name,ru.role_desc from sys_user u,sys_role ru where u.role_id=ru.id
+    </select>
+    <select id="selectByUsername" parameterType="string" resultMap="UserResultMap">
+         select u.id,u.username,u.user_info_name,u.password,u.salt,u.token,u.sex,u.phone_number,u.email,u.birthday,u.address,u.role_id,u.userimg,
+         ru.id ru_id,ru.role_name,ru.role_desc from sys_user u,sys_role ru where u.role_id=ru.id and u.username=#{username}
+    </select>
+</mapper>
