@@ -4,7 +4,11 @@ import com.zc.service.UserService;
 import com.zc.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/users")
 public class UserController extends BaseController {
@@ -53,7 +57,9 @@ public class UserController extends BaseController {
   @PostMapping
   public JsonResult register(@RequestBody User user) {
       userService.register(user);
-      return new JsonResult(OK);
+      Map<String, String> map = new HashMap<>();
+      map.put("token",user.getToken());
+      return new JsonResult(OK,map);
 
   }
     /**

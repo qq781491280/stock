@@ -61,7 +61,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         int i = goodsMapper.addone(goods);
         Long goodsId = goods.getId();
         Long[] imgidlsit = goods.getImgidlsit();
-        System.out.println(imgidlsit.length);
         for (Long id:imgidlsit) {
             fileMapper.addGoodsImg(goodsId,id);
     }

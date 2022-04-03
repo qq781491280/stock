@@ -17,4 +17,6 @@ public interface UserMapper extends BaseMapper<User> {
     Integer updateByUsername(User user);
     Integer updateAvatarByUsername(@Param("username") String username,@Param("userimg") String userimg);
     Integer updatePasswordByUsername(@Param("username")String username,@Param("newpassword")String newpassword,@Param("oldpassword")String oldpassword);
+    Integer updatetoken(@Param("username") String username,@Param("token") String token);
+    Integer register(User user);
 }

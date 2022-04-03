@@ -11,7 +11,10 @@ public class User {
     private String username;
     private String  userInfoName;
     private String password;
+    //盐值
     private String salt;
+    //token
+    private String token;
     private String  sex;
     private Long  phoneNumber;
     private String  email;

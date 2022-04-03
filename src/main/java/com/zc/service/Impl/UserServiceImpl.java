@@ -6,6 +6,7 @@ import com.zc.mapper.FileMapper;
 import com.zc.mapper.UserMapper;
 import com.zc.service.UserService;
 import com.zc.service.ex.*;
+import com.zc.utils.JwtUtil;
 import com.zc.utils.judge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,11 +60,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       // 调用getMd5Password()方法，将参数password和salt结合起来进行加密
       String md5Password = getMd5Password(password, salt);
       // 判断查询结果中的密码，与以上加密得到的密码是否不一致
-     if (!result.getPassword().equals(md5Password)) {
-            // 是：抛出PasswordNotMatchException异常
-        throw new PasswordNotMatchException("密码验证失败的错误");
-}
-//        if (!userPassword.equals(password)) throw new PasswordNotMatchException("密码错误");
+      // 是：抛出PasswordNotMatchException异常
+     if (!userPassword.equals(md5Password))  throw new PasswordNotMatchException("密码验证失败的错误");
+        String token = JwtUtil.getToken(result.getId(),result.getUsername());
+        result.setToken(token);
+        userMapper.updatetoken(username,token);
         return result;
     }
     /**
@@ -81,11 +82,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String salt = UUID.randomUUID().toString().toUpperCase();
         String md5Password = getMd5Password(user.getPassword(), salt);
         user.setPassword(md5Password);
+        user.setUserInfoName(user.getUsername());
         user.setSalt(salt);
         user.setRoleId(2);
         user.setUserimg("http://127.0.0.1:80/api/file/toux.png");
-        int i = userMapper.insert(user);
-        if (i!=1) throw  new InsertException("注册时发生了未知的错误");
+        userMapper.register(user);
+        String token = JwtUtil.getToken(user.getId(),user.getUsername());
+        user.setToken(token);
+        Integer i = userMapper.updatetoken(user.getUsername(), token);
         return i==1;
     }
 
@@ -138,6 +142,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     // 补全数据：加密后的密码
                     String newsalt = UUID.randomUUID().toString().toUpperCase();
                     String newmd5Password = getMd5Password(newpassword, newsalt);
+                    String token = JwtUtil.getToken(result.getId(),username);
+                    userMapper.updatetoken(username,token);
                     Integer i = userMapper.updatePasswordByUsername(username, newmd5Password,oldmd5Password);
                     if (i!=1) throw new InsertException("修改密码时发生了未知错误");
                 }
