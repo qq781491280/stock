@@ -111,6 +111,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Date date = format.parse(etime);
         result.setEtime(date);
         result.setWprice(goods.getWprice());
+        orderService.createRukuOrder(goods,27);
         goodsMapper.updateNumberByName(result);
     }
 

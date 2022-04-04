@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class RukuOrder {
-    private String orderId;
+    private String rukuId;
     private String  name;
     private Integer count;
     private Double price;

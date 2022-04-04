@@ -50,8 +50,9 @@ public class userInfoMapperTest {
 
 //        List<Order> order = orderService.getOrder();
 //        System.out.println(order);
-        List<Order> bystr = orderMapper.selectBystr("创维");
-        System.out.println(bystr);
+//        List<Order> bystr = orderMapper.selectBystr("创维");
+//        System.out.println(bystr);
+        System.out.println(orderMapper.selectToday());
     }
 
 }

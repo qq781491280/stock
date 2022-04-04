@@ -20,6 +20,9 @@ public class UserMapperTest {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    RukuOrderMapper rukuOrderMapper;
+
     @Test
     void selectById(){
         System.out.println(userMapper.selectById(1));
@@ -31,7 +34,8 @@ public class UserMapperTest {
 //        user.setPassword("123");
 //        user.setRoleid(1);
 //        System.out.println(userMapper.insert(user));
-        goodsMapper.selectByMname("G502");
+        Integer integer = rukuOrderMapper.selectToday();
+        System.out.println(integer);
 
     }
 }

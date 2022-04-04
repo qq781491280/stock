@@ -26,4 +26,28 @@
     and sys_order.order_id=sys_order_item.order_id
     </select>
 
+    <select id="selectToday" resultType="integer">
+        select COUNT(*) from sys_order
+        where date(create_time)=date(now())
+    </select>
+
+    <select id="selectToMonth" resultType="integer">
+       select COUNT(*) from sys_order where month(create_time) =
+  month(curdate()) and year(create_time) = year(curdate())
+    </select>
+
+    <select id="selectToWeek" resultType="integer">
+        select COUNT(*)from sys_order where month(create_time) =
+month(curdate()) and week(create_time) = week(curdate())
+    </select>
+
+    <select id="selectToYear" resultType="integer">
+    SELECT COUNT(*) FROM sys_order WHERE year(create_time) = year( curdate( ))
+    </select>
+
+
+    <select id="selectTodayPrice" resultType="integer">
+       select SUM(price) from sys_order where date(create_time)=date(now())
+    </select>
+
 </mapper>

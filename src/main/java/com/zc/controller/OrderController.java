@@ -3,6 +3,7 @@ package com.zc.controller;
 import com.zc.domian.Files;
 import com.zc.domian.Goods;
 import com.zc.domian.Order;
+import com.zc.domian.Statistics;
 import com.zc.service.OrderService;
 import com.zc.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,13 @@ public class OrderController extends BaseController {
     public  JsonResult search(String str){
         List<Order> list =   orderService.findBystr(str);
         return new JsonResult(OK,list);
+    }
+
+    @RequestMapping("/statistics")
+    @ResponseBody
+    public  JsonResult statistics(){
+        Statistics statistics = orderService.getStatistics();
+        return new JsonResult(OK,statistics);
     }
 
 }

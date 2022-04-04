@@ -2,12 +2,11 @@ package com.zc.service.Impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zc.domian.Goods;
-import com.zc.domian.Order;
-import com.zc.domian.OrderItem;
+import com.zc.domian.*;
 import com.zc.mapper.GoodsMapper;
 import com.zc.mapper.OrderItemMapper;
 import com.zc.mapper.OrderMapper;
+import com.zc.mapper.RukuOrderMapper;
 import com.zc.service.OrderService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +20,16 @@ import java.util.List;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
     @Autowired
-    OrderMapper orderMapper;
+ private  OrderMapper orderMapper;
 
     @Autowired
-    OrderItemMapper orderItemMapper;
+    private  OrderItemMapper orderItemMapper;
 
     @Autowired
-    GoodsMapper goodsMapper;
+    private RukuOrderMapper rukuOrderMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     @SneakyThrows
     @Override
@@ -53,6 +55,46 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         orderItem.setPrice(goods.getSprice());
         orderItemMapper.insert(orderItem);
         return orderId;
+    }
+
+    @SneakyThrows
+    @Override
+    public String createRukuOrder(Goods goods, Integer userid) {
+        //订单号===唯一性 时间戳
+        String orderId = System.currentTimeMillis()+userid+"";
+        Goods result = goodsMapper.findOneById(goods.getId());
+        RukuOrder rukuOrder = new RukuOrder();
+        rukuOrder.setRukuId(orderId);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = format.format(new Date());
+        Date createtime = format.parse(time);
+        rukuOrder.setCreateTime(createtime);
+        rukuOrder.setPrice(goods.getWprice());
+        rukuOrder.setUserid(userid);
+        rukuOrder.setName(result.getBrand().getPinpai()+result.getMname());
+        rukuOrder.setCount(Math.toIntExact(goods.getNumber()));
+        rukuOrder.setTotalPrice(goods.getWprice()*goods.getNumber());
+        rukuOrder.setPrice(goods.getSprice());
+        rukuOrderMapper.insert(rukuOrder);
+        return orderId;
+    }
+
+    @Override
+    public Statistics getStatistics() {
+        Statistics statistics = new Statistics();
+        Integer today = orderMapper.selectToday();
+        Integer todayPrice = orderMapper.selectTodayPrice();
+        Integer toWeek = orderMapper.selectToWeek();
+        Integer toMonth = orderMapper.selectToMonth();
+        Integer toYear = orderMapper.selectToYear();
+        Integer rukutoday = rukuOrderMapper.selectToday();
+        statistics.setToday(today);
+        statistics.setWeek(toWeek);
+        statistics.setMonth(toMonth);
+        statistics.setYear(toYear);
+        statistics.setTodayPrice(todayPrice);
+        statistics.setRukutoday(rukutoday);
+        return statistics;
     }
 
     @Override

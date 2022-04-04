@@ -12,6 +12,11 @@ import java.util.List;
 @Mapper
 public interface OrderMapper extends BaseMapper<Order> {
     List<Order> selectAll();
+    Integer selectToday();
+    Integer selectTodayPrice();
+    Integer selectToYear();
+    Integer selectToWeek();
+    Integer selectToMonth();
     List<Order> selectByOrderId(@Param("orderid") String orderid);
     List<Order>selectBystr(@Param("str") String str);
 }
