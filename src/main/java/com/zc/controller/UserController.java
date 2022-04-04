@@ -47,8 +47,10 @@ public class UserController extends BaseController {
    */
     @GetMapping("{username}/{password}")
   public JsonResult login(@PathVariable String username, @PathVariable String password){
-        userService.login(username, password);
-        return new JsonResult(OK);
+        User login = userService.login(username, password);
+        Map<String, String> token = new HashMap<>();
+        token.put("token",login.getToken());
+        return new JsonResult(OK,token);
     }
 
     /**

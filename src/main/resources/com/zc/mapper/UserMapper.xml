@@ -11,7 +11,7 @@
         <result column="sex" property="sex" jdbcType="VARCHAR" />
         <result column="phone_number" property="phoneNumber" jdbcType="BIGINT" />
         <result  column="email" property="email" jdbcType="VARCHAR"/>
-        <result  column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result  column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
         <result  column="address" property="address" jdbcType="VARCHAR"/>
         <result column="role_id" property="roleId" jdbcType="INTEGER"/>
         <result column="userimg" property="userimg" jdbcType="VARCHAR"/>
@@ -28,10 +28,10 @@
             <if test="sex != null">sex=#{sex},</if>
             <if test="phoneNumber != null">phone_number=#{phoneNumber},</if>
             <if test="email != null">email=#{email},</if>
-            <if test="birthday!= null">birthday=#{birthday}</if>
-            <if test="address != null">address=#{address}</if>
-            <if test="roleId != null">role_id=#{roleId}</if>
-            <if test="userimg != null">userimg=#{userimg}</if>
+            <if test="birthday!= null">birthday=#{birthday},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="roleId != null">role_id=#{roleId},</if>
+            <if test="userimg != null">userimg=#{userimg},</if>
         </set>
         WHERE username=#{username}
     </update>
