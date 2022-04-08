@@ -54,5 +54,7 @@ public class Goods {
     //
     private Long[] imgidlsit;
 
+    private Integer userid;
+
 }
 

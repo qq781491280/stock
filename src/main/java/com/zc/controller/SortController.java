@@ -21,6 +21,13 @@ public class SortController extends BaseController {
         return new JsonResult(OK,list);
     }
 
+    @GetMapping("{userid}")
+    public JsonResult getByUserId(@PathVariable Integer userid){
+        List<Sort> list = sortService.findByuserid(userid);
+        System.out.println(userid);
+        return new JsonResult(OK,list);
+    }
+
     @PostMapping
     public JsonResult addone(@RequestBody Sort sort){
         sortService.save(sort);

@@ -3,6 +3,7 @@ package com.zc.mapper;
 import com.zc.domian.Files;
 import com.zc.domian.Goods;
 import com.zc.domian.Order;
+import com.zc.domian.Tongji;
 import com.zc.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,9 @@ public class userInfoMapperTest {
 //        List<Order> order = orderService.getOrder();
 //        System.out.println(order);
 //        List<Order> bystr = orderMapper.selectBystr("创维");
-//        System.out.println(bystr);
-        System.out.println(orderMapper.selectToday());
+//        System.out.println(bystr);intln(t.getDays());
+        }
+
     }
 
-}
+

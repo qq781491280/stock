@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,14 +81,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
-    public Statistics getStatistics() {
+    public Statistics getStatistics(Integer userid) {
         Statistics statistics = new Statistics();
-        Integer today = orderMapper.selectToday();
-        Integer todayPrice = orderMapper.selectTodayPrice();
-        Integer toWeek = orderMapper.selectToWeek();
-        Integer toMonth = orderMapper.selectToMonth();
-        Integer toYear = orderMapper.selectToYear();
-        Integer rukutoday = rukuOrderMapper.selectToday();
+        Integer today = orderMapper.selectToday(userid);
+        Integer todayPrice = orderMapper.selectTodayPrice(userid);
+        Integer toWeek = orderMapper.selectToWeek(userid);
+        Integer toMonth = orderMapper.selectToMonth(userid);
+        Integer toYear = orderMapper.selectToYear(userid);
+        Integer rukutoday = rukuOrderMapper.selectToday(userid);
         statistics.setToday(today);
         statistics.setWeek(toWeek);
         statistics.setMonth(toMonth);
@@ -95,6 +96,54 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         statistics.setTodayPrice(todayPrice);
         statistics.setRukutoday(rukutoday);
         return statistics;
+    }
+
+    @Override
+    public List<Tongji> getWeek(Integer userid) {
+        List<Tongji> data = new ArrayList<>();
+        List<Tongji> chuku = orderMapper.selecttongjitoday(userid);
+        List<Tongji> ruku = rukuOrderMapper.selecttongjitoday(userid);
+        for (Tongji t: chuku){
+            t.setName("出库");
+            data.add(t);
+        }
+        for (Tongji c:ruku){
+            c.setName("入库");
+            data.add(c);
+        }
+        return data;
+    }
+
+    @Override
+    public List<Tongji> getMount(Integer userid) {
+        List<Tongji> data = new ArrayList<>();
+        List<Tongji> chuku = orderMapper.selecttongjitomonth(userid);
+        List<Tongji> ruku = rukuOrderMapper.selecttongjitomonth(userid);
+        for (Tongji t: chuku){
+            t.setName("出库");
+            data.add(t);
+        }
+        for (Tongji c:ruku){
+            c.setName("入库");
+            data.add(c);
+        }
+        return data;
+    }
+
+    @Override
+    public List<Tongji> getYear(Integer userid) {
+        List<Tongji> data = new ArrayList<>();
+        List<Tongji> chuku = orderMapper.selecttongjiyear(userid);
+        List<Tongji> ruku = rukuOrderMapper.selecttongjiyear(userid);
+        for (Tongji t: chuku){
+            t.setName("出库");
+            data.add(t);
+        }
+        for (Tongji c:ruku){
+            c.setName("入库");
+            data.add(c);
+        }
+        return data;
     }
 
     @Override
@@ -120,16 +169,27 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
-    public List<Order> findBystr(String str) {
-        List<Order> orders = orderMapper.selectBystr(str);
+    public List<Order> findBystr(String str,Integer userid) {
+        List<Order> orders = orderMapper.selectBystr(str,userid);
         if (str==""||str==null){
-            this.getOrder();
+            this.getOrderByUserId(userid);
         }else {
             for (Order o: orders) {
                 String orderId = o.getOrderId();
                 List<OrderItem> orderItems = orderItemMapper.selectByOrderId(orderId);
                 o.setOrderItems(orderItems);
             }
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getOrderByUserId(Integer userid) {
+        List<Order> orders = orderMapper.selectByOrderByUserId(userid);
+        for (Order o: orders) {
+            String orderId = o.getOrderId();
+            List<OrderItem> orderItems = orderItemMapper.selectByOrderId(orderId);
+            o.setOrderItems(orderItems);
         }
         return orders;
     }

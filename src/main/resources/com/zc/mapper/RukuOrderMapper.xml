@@ -4,7 +4,27 @@
 
     <select id="selectToday" resultType="integer">
         select COUNT(*) from sys_ruku_order
-        where date(create_time)=date(now())
+        where date(create_time)=date(now()) and userid=#{userid}
+    </select>
+
+    <select id="selecttongjitoday" resultType="com.zc.domian.Tongji">
+        SELECT
+        DATE_FORMAT( create_time, '%Y-%m-%d' ) days,
+        sum(total_price) total,
+        count(*) count
+        FROM
+        ( SELECT * FROM sys_ruku_order
+        WHERE DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date(create_time) and userid=#{userid} ) as sys_order
+        GROUP BY
+        days;
+    </select>
+
+    <select id="selecttongjitomonth" resultType="com.zc.domian.Tongji">
+        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.total_price) total,COUNT(*) count FROM `sys_ruku_order` t where userid=#{useird} GROUP BY days
+    </select>
+
+    <select id="selecttongjiyear" resultType="com.zc.domian.Tongji">
+    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.total_price) total,COUNT(*) count FROM `sys_ruku_order` t where userid=#{useird} GROUP BY days
     </select>
 
 </mapper>

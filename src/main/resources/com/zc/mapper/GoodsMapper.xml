@@ -12,6 +12,7 @@
         <result column="sprice" property="sprice" jdbcType="DECIMAL" />
         <result column="etime" property="etime" jdbcType="TIMESTAMP"/>
         <result column="wtime" property="wtime" jdbcType="TIMESTAMP"/>
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
         <association property="sort" javaType="com.zc.domian.Sort">
             <id column="c_id" property="id" jdbcType="INTEGER" />
             <result column="c_name" property="cname" jdbcType="VARCHAR" />
@@ -70,15 +71,20 @@
     </delete>
 
     <select id="selectByMname" resultMap="goodsResultMap">
-      select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.mname=#{mname}
+      select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,g.userid,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.mname=#{mname}
     </select>
     <select id="selectList" resultMap="goodsResultMap">
-        select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id
+        select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,g.userid,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id
     </select>
+
+    <select id="selectByUserId" resultMap="goodsResultMap">
+        select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,g.userid,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.userid=#{userid}
+    </select>
+
     <select id="selectimgByid" resultMap="goodsResultMap">
      select * from sys_goodsimg ur,sys_goods r where ur.goodsid=r.id and ur.goodsid=#{id}
     </select>
     <select id="findOneById" resultMap="goodsResultMap">
-          select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.id=#{id}
+          select g.id,g.cid,g.bid,g.mname,g.number,g.wprice,g.sprice,g.etime,g.wtime,g.userid,c.id c_id,c.cname c_name,b.id b_id,b.pinpai b_name from sys_goods g,sys_sort c,sys_brand b where g.cid=c.id and g.bid=b.id and g.id=#{id}
     </select>
 </mapper>

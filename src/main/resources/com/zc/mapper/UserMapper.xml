@@ -36,8 +36,8 @@
         WHERE username=#{username}
     </update>
     <insert id="register" parameterType="com.zc.domian.User" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user(username,user_info_name,password,salt,token,sex,phone_number,email,birthday,address,role_id)
-        VALUES (#{username},#{userInfoName},#{password},#{salt},#{token},#{sex},#{phoneNumber},#{email},#{birthday},#{address},#{roleId})
+        insert into sys_user(username,user_info_name,password,salt,token,sex,phone_number,email,birthday,address,role_id,userimg)
+        VALUES (#{username},#{userInfoName},#{password},#{salt},#{token},#{sex},#{phoneNumber},#{email},#{birthday},#{address},#{roleId},#{userimg})
     </insert>
     <update id="updatePasswordByUsername">
 		update sys_user set password=#{newpassword} where username=#{username}

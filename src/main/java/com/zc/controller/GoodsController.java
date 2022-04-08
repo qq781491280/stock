@@ -25,6 +25,13 @@ public class GoodsController extends BaseController {
         return new JsonResult(OK,list);
     }
 
+    @RequestMapping("/findByUserId")
+    @ResponseBody
+    public JsonResult findByUserId(@RequestParam("userid") Integer userid){
+        List<Goods> list = goodsService.getByUserid(userid);
+        return new JsonResult(OK,list);
+    }
+
     /**
      * 按信息查询商品
      * @param mname

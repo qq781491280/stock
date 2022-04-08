@@ -24,30 +24,54 @@
             </if>
         </where>
     and sys_order.order_id=sys_order_item.order_id
+    and sys_order.userid=#{userid}
     </select>
 
     <select id="selectToday" resultType="integer">
         select COUNT(*) from sys_order
-        where date(create_time)=date(now())
+        where date(create_time)=date(now()) and userid=#{userid}
     </select>
 
     <select id="selectToMonth" resultType="integer">
        select COUNT(*) from sys_order where month(create_time) =
-  month(curdate()) and year(create_time) = year(curdate())
+  month(curdate()) and year(create_time) = year(curdate()) and userid=#{userid}
     </select>
 
     <select id="selectToWeek" resultType="integer">
         select COUNT(*)from sys_order where month(create_time) =
-month(curdate()) and week(create_time) = week(curdate())
+month(curdate()) and week(create_time) = week(curdate()) and userid=#{userid}
     </select>
 
     <select id="selectToYear" resultType="integer">
-    SELECT COUNT(*) FROM sys_order WHERE year(create_time) = year( curdate( ))
+    SELECT COUNT(*) FROM sys_order WHERE year(create_time) = year( curdate( )) and userid=#{userid}
     </select>
 
 
     <select id="selectTodayPrice" resultType="integer">
-       select SUM(price) from sys_order where date(create_time)=date(now())
+       select SUM(price) from sys_order where date(create_time)=date(now()) and userid=#{userid}
     </select>
 
+    <select id="selecttongjitoday" resultType="com.zc.domian.Tongji">
+        SELECT
+        DATE_FORMAT( create_time, '%Y-%m-%d' ) days,
+        sum(price) total,
+        count(*) count
+        FROM
+        ( SELECT * FROM sys_order
+        WHERE DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date(create_time) and userid=#{userid} ) as sys_order
+        GROUP BY
+        days
+    </select>
+
+
+    <select id="selecttongjitomonth" resultType="com.zc.domian.Tongji">
+        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.price) total,COUNT(*) count FROM `sys_order` t where userid=#{userid} GROUP BY days
+    </select>
+
+    <select id="selecttongjiyear" resultType="com.zc.domian.Tongji">
+    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.price) total,COUNT(*) count FROM `sys_order` t where userid=#{userid} GROUP BY days
+    </select>
+    <select id="selectByOrderByUserId" resultMap="OrderResultMap">
+        select * from  sys_order where userid=#{userid}
+    </select>
 </mapper>

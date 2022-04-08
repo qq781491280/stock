@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class Sort {
-
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String cname;
+    private Integer userid;
 }

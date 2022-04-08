@@ -12,6 +12,8 @@ public interface GoodsService extends IService<Goods> {
     Goods getBymname(String mname);
     List<Goods> getList();
 
+    List<Goods> getByUserid(Integer userid);
+
     void addGoods(Goods goods);
 
     void removeByMname(String mname);

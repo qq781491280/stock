@@ -32,4 +32,6 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     Goods findOneById(@Param("id") Long id);
 
     List<Goods> selectimgByid(@Param("id") Long id);
+
+    List<Goods> selectByUserId(@Param("userid") Integer userid);
 }

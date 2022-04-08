@@ -53,6 +53,17 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     }
 
     @Override
+    public List<Goods> getByUserid(Integer userid) {
+        List<Goods> result = goodsMapper.selectByUserId(userid);
+        for (Goods f: result) {
+            Long id = f.getId();
+            List<Files> goodsImgByGid = fileMapper.findGoodsImgByGid(id);
+            f.setGoodsimg(goodsImgByGid);
+        }
+        return result;
+    }
+
+    @Override
     public void addGoods(Goods goods) {
         Goods mname = goodsMapper.selectByMname(goods.getMname());
         if (mname !=null) throw new GoodsException("商品已存在");
@@ -111,7 +122,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Date date = format.parse(etime);
         result.setEtime(date);
         result.setWprice(goods.getWprice());
-        orderService.createRukuOrder(goods,27);
+        orderService.createRukuOrder(goods,goods.getUserid());
         goodsMapper.updateNumberByName(result);
     }
 
@@ -127,7 +138,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             Date date = format.parse(wtime);
             result.setWtime(date);
             result.setSprice(goods.getSprice());
-            orderService.createOrder(goods,1);
+            orderService.createOrder(goods,goods.getUserid());
             goodsMapper.updateWtimeNumberByName(result);
         }else {
             throw  new GoodsException("库存不足");
