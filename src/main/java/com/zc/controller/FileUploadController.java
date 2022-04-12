@@ -38,9 +38,9 @@ public class FileUploadController extends BaseController {
 
     @RequestMapping("/uploadlist")
     @ResponseBody
-    public  JsonResult uploadlist(@RequestParam("file") MultipartFile[] file,String mname){
+    public  JsonResult uploadlist(@RequestParam("file") MultipartFile[] file, @RequestParam("mname") String mname,@RequestParam("username") String username){
 
-        List<Files> uploadlist = fileService.uploadlist(file,mname);
+        List<Files> uploadlist = fileService.uploadlist(file,mname,username);
 
         return new JsonResult(OK,uploadlist);
     }

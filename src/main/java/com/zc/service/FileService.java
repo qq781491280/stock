@@ -14,7 +14,7 @@ public interface FileService extends IService<Files> {
 
     Map<String, String> uploadAvatar(MultipartFile file,String username);
 
-    List<Files> uploadlist(MultipartFile[] files,String mname);
+    List<Files> uploadlist(MultipartFile[] files,String mname,String username);
 
     void  delimg(Files files);
 }

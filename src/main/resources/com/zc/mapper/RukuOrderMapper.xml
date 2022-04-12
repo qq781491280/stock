@@ -9,22 +9,22 @@
 
     <select id="selecttongjitoday" resultType="com.zc.domian.Tongji">
         SELECT
-        DATE_FORMAT( create_time, '%Y-%m-%d' ) days,
-        sum(total_price) total,
-        count(*) count
+       DATE_FORMAT( create_time, '%Y-%m-%d' ) days,
+       sum(total_price) total,
+       sum(count) count
         FROM
         ( SELECT * FROM sys_ruku_order
-        WHERE DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date(create_time) and userid=#{userid} ) as sys_order
+        WHERE DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date(create_time) and userid=#{userid} ) as sys_ruku_order
         GROUP BY
         days;
     </select>
 
     <select id="selecttongjitomonth" resultType="com.zc.domian.Tongji">
-        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.total_price) total,COUNT(*) count FROM `sys_ruku_order` t where userid=#{useird} GROUP BY days
+        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.total_price) total,sum(count) count FROM sys_ruku_order t where userid=#{useird} GROUP BY days
     </select>
 
     <select id="selecttongjiyear" resultType="com.zc.domian.Tongji">
-    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.total_price) total,COUNT(*) count FROM `sys_ruku_order` t where userid=#{useird} GROUP BY days
+    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.total_price) total,sum(count) count FROM sys_ruku_order t where userid=#{useird} GROUP BY days
     </select>
 
 </mapper>

@@ -72,7 +72,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
             e.printStackTrace();
         }
         //上传完毕，存入数据库中的地址为：
-        String invented_address="http://127.0.0.1:" + POST + "/api/file/" + newFileName;
+        String invented_address="http://120.77.45.133:" + POST + "/api/file/" + newFileName;
         String location = uploadFolder+newFileName;
         files.setLocation(invented_address);
         files.setCreateTime(new Date());
@@ -116,13 +116,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
 
             e.printStackTrace();
         }
-        String userimg="http://127.0.0.1:" + POST + "/api/file/" + newFileName;
+        String userimg="http://120.77.45.133:" + POST + "/api/file/" + newFileName;
         //获取路径后面的文件名
         String s = user.getUserimg();
         String trim = s.trim();
         String fileName = trim.substring(trim.lastIndexOf("/")+1);
         String location = avatarFolder+fileName;
-        if (!user.getUserimg().equals("http://127.0.0.1:80/api/file/toux.png")){
+        if (!user.getUserimg().equals("http://120.77.45.133:"+POST+"/api/file/toux.png")){
             FileUtils.deleteFile(location);
         }
 
@@ -136,7 +136,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
 
     @SneakyThrows
     @Override
-    public List<Files> uploadlist(MultipartFile[] files,String mname){
+    public List<Files> uploadlist(MultipartFile[] files,String mname,String username){
         List <Files> filesList = new ArrayList<>();
         if (files.length>0){
             for (MultipartFile file: files){
@@ -166,14 +166,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
                     e.printStackTrace();
                 }
                 //上传完毕，存入数据库中的地址为：
-                String invented_address="http://127.0.0.1:" + POST + "/api/file/" + newFileName;
+                String invented_address="http://120.77.45.133:" + POST + "/api/file/" + newFileName;
                 String location = uploadFolder+newFileName;
                 filelist.setLocation(invented_address);
                 filelist.setCreateTime(new Date());
                 filelist.setUpdateTime(new Date());
                 filelist.setOldName(oldFilename);
                 filelist.setDescription(location);
-                filelist.setUid("admin");
+                filelist.setUid(username);
                 filelist.setName(mname);
                 fileMapper.insertImg(filelist);
                 if(oldEntity != null) {

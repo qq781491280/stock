@@ -25,7 +25,7 @@
         </association>
     </resultMap>
     <insert id="addone" parameterType="com.zc.domian.Goods" useGeneratedKeys="true" keyProperty="id">
-        INSERT  INTO sys_goods(cid,bid,mname,number)VALUES (#{cid},#{bid},#{mname},#{number})
+        INSERT  INTO sys_goods(cid,bid,mname,userid,number)VALUES (#{cid},#{bid},#{mname},#{userid},#{number})
     </insert>
     <update id="updateBymname" parameterType="com.zc.domian.Goods">
         UPDATE sys_goods

@@ -28,36 +28,45 @@
     </select>
 
     <select id="selectToday" resultType="integer">
-        select COUNT(*) from sys_order
-        where date(create_time)=date(now()) and userid=#{userid}
+select sum(sys_order_item.count) today from sys_order,sys_order_item where date(create_time)=date(now())
+ AND sys_order.order_id=sys_order_item.order_id
+ and userid=#{userid}
     </select>
 
     <select id="selectToMonth" resultType="integer">
-       select COUNT(*) from sys_order where month(create_time) =
-  month(curdate()) and year(create_time) = year(curdate()) and userid=#{userid}
+       select sum(sys_order_item.count) month from sys_order,sys_order_item where month(create_time) =
+  month(curdate()) and year(create_time) = year(curdate())
+   AND sys_order.order_id=sys_order_item.order_id
+ and userid=#{userid}
     </select>
 
     <select id="selectToWeek" resultType="integer">
-        select COUNT(*)from sys_order where month(create_time) =
-month(curdate()) and week(create_time) = week(curdate()) and userid=#{userid}
+        select sum(sys_order_item.count) week from sys_order,sys_order_item where month(create_time) =
+month(curdate()) and week(create_time) = week(curdate())
+ AND sys_order.order_id=sys_order_item.order_id
+ and userid=#{userid}
     </select>
 
     <select id="selectToYear" resultType="integer">
-    SELECT COUNT(*) FROM sys_order WHERE year(create_time) = year( curdate( )) and userid=#{userid}
+    SELECT sum(sys_order_item.count) year FROM sys_order,sys_order_item WHERE year(create_time) = year( curdate( ))
+    AND sys_order.order_id=sys_order_item.order_id
+    and userid=#{userid}
     </select>
 
 
     <select id="selectTodayPrice" resultType="integer">
-       select SUM(price) from sys_order where date(create_time)=date(now()) and userid=#{userid}
+       select SUM(sys_order.price) from sys_order,sys_order_item where date(create_time)=date(now())
+        AND sys_order.order_id=sys_order_item.order_id
+         and userid=#{userid}
     </select>
 
     <select id="selecttongjitoday" resultType="com.zc.domian.Tongji">
         SELECT
-        DATE_FORMAT( create_time, '%Y-%m-%d' ) days,
-        sum(price) total,
-        count(*) count
+        DATE_FORMAT( octime, '%Y-%m-%d' ) days,
+	    SUM(op) total,
+	    SUM(oic) count
         FROM
-        ( SELECT * FROM sys_order
+        ( SELECT o.create_time octime,o.price op,oi.count oic FROM sys_order o,sys_order_item oi
         WHERE DATE_SUB( CURDATE(), INTERVAL 7 DAY ) &lt;= date(create_time) and userid=#{userid} ) as sys_order
         GROUP BY
         days
@@ -65,11 +74,11 @@ month(curdate()) and week(create_time) = week(curdate()) and userid=#{userid}
 
 
     <select id="selecttongjitomonth" resultType="com.zc.domian.Tongji">
-        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.price) total,COUNT(*) count FROM `sys_order` t where userid=#{userid} GROUP BY days
+        SELECT DATE_FORMAT(t.create_time,'%Y-%m') month_time,sum(t.price) total,SUM(ti.count) count FROM sys_order t,sys_order_item ti GROUP BY month_time;
     </select>
 
     <select id="selecttongjiyear" resultType="com.zc.domian.Tongji">
-    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.price) total,COUNT(*) count FROM `sys_order` t where userid=#{userid} GROUP BY days
+    SELECT DATE_FORMAT(t.create_time,'%Y') year_time,sum(t.price) total,SUM(ti.count) count  FROM sys_order t,sys_order_item ti GROUP BY year_time;
     </select>
     <select id="selectByOrderByUserId" resultMap="OrderResultMap">
         select * from  sys_order where userid=#{userid}
