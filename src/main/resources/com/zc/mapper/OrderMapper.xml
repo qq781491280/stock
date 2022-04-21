@@ -74,11 +74,11 @@ month(curdate()) and week(create_time) = week(curdate())
 
 
     <select id="selecttongjitomonth" resultType="com.zc.domian.Tongji">
-        SELECT DATE_FORMAT(t.create_time,'%Y-%m') month_time,sum(t.price) total,SUM(ti.count) count FROM sys_order t,sys_order_item ti GROUP BY month_time;
+        SELECT DATE_FORMAT(t.create_time,'%Y-%m') days,sum(t.price) total,SUM(ti.count) count FROM sys_order t,sys_order_item ti GROUP BY days;
     </select>
 
     <select id="selecttongjiyear" resultType="com.zc.domian.Tongji">
-    SELECT DATE_FORMAT(t.create_time,'%Y') year_time,sum(t.price) total,SUM(ti.count) count  FROM sys_order t,sys_order_item ti GROUP BY year_time;
+    SELECT DATE_FORMAT(t.create_time,'%Y') days,sum(t.price) total,SUM(ti.count) count  FROM sys_order t,sys_order_item ti GROUP BY days;
     </select>
     <select id="selectByOrderByUserId" resultMap="OrderResultMap">
         select * from  sys_order where userid=#{userid}
